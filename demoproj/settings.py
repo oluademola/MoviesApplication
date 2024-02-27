@@ -25,7 +25,7 @@ SECRET_KEY = '208#hh#+39*!8&!opzur)b28ihnsxk0rx3*kbwuf@iri6on-7r'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["9b371976b38547ca8316ef222c02855a.vfs.cloud9.eu-west-1.amazonaws.com", "x23240334ElbMoviesApp-env.eba-wcjns22h.eu-west-1.elasticbeanstalk.com"]
+ALLOWED_HOSTS = ["9b371976b38547ca8316ef222c02855a.vfs.cloud9.eu-west-1.amazonaws.com", "x23240334elbmoviesapp-env.eba-wcjns22h.eu-west-1.elasticbeanstalk.com/"]
 
 
 # Application definition .....
