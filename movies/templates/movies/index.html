@@ -1,3 +1,5 @@
+{% extends "movies/base_generic.html" %}
+{% block content %}
 <h1>Newest Movies<h1>
 {% if newest_movies %}
 <ul>
@@ -8,3 +10,4 @@
 {% else %}
 <p>There are no movies recorded.</p>
 {% endif %}
+{% endblock content %}
