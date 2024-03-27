@@ -5,27 +5,27 @@ env:
     HOST: olumoviesapp/sonar:HOST
     Organization: olumoviesapp/sonar:Organization
     Project: olumoviesapp/sonar:Project
-
 phases:
   install:
     runtime-versions:
-      python: 3.11
+      python: 3.11  # Specify the exact Python version if needed
   pre_build:
     commands:
-      - yum install -y jq
-      - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip
-      - unzip ./sonar-scanner-cli-5.0.1.3006-linux.zip
-      - export PATH=$PATH:/sonar-scanner-5.0.1.3006-linux/bin/
-
+      - apt-get update
+      - apt-get install -y python3-pip jq
+      - pip3 install --upgrade pip
+      - pip3 install sonar-scanner  # Use pip for Python-based SonarScanner
+      - export PATH=$PATH:/root/.local/bin/  # Add Python's bin directory to PATH
   build:
     commands:
-      - sonar-scanner-5.0.1.3006-linux/bin/sonar-scanner \
-          -Dsonar.login=$LOGIN \
-          -Dsonar.host.url=$HOST \
-          -Dsonar.projectKey=$Project \
-          -Dsonar.organization=$Organization
+      - sonar-scanner \
+        -Dsonar.login=$LOGIN \
+        -Dsonar.host.url=$HOST \
+        -Dsonar.projectKey=$Project \
+        -Dsonar.organization=$Organization \
+        -Dsonar.sources=. \  # Specify source code path if not inferred correctly
+        -Dsonar.python.coverage.reportPaths=coverage.xml  # If coverage report generated
       - sleep 5
-      - curl https://sonarcloud.io/api/qualitygates/project_status?projectKey=$Project >result.json
+      - curl https://sonarcloud.io/api/qualitygates/project_status?projectKey=$Project > result.json
       - cat result.json
-      - if [ $(jq -r '.projectStatus.status' result.json) = ERROR ] ; then $CODEBUILD_BUILD_SUCCEEDING -eq 0 ;fi
-
+      - if [ $(jq -r '.projectStatus.status' result.json) = ERROR ] ; then exit 1 ; fi  # Exit with error code 1 based on quality gate status
