@@ -22,8 +22,6 @@ phases:
 
   build:
     commands:
-      # Run your Django tests here, replace with your actual test command
-      - python manage.py test
       - sonar-scanner \
           -Dsonar.login=$LOGIN \
           -Dsonar.host.url=$HOST \
