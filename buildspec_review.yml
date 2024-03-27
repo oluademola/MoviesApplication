@@ -21,12 +21,13 @@ phases:
 
   build:
     commands:
-      - sonar-scanner-4.6.2.2472-linux/bin/sonar-scanner \
-          -Dsonar.login=$LOGIN \
-          -Dsonar.host.url=$HOST \
-          -Dsonar.projectKey=$Project \
-          -Dsonar.organization=$Organization \
-          -Dsonar.sources=.  # Specify source code path if not inferred correctly
+      - sonar-scanner-4.6.2.2472-linux/bin/sonar-scanner |
+          -Dsonar.login=$LOGIN |
+          -Dsonar.host.url=$HOST |
+          -Dsonar.projectKey=$Project |
+          -Dsonar.organization=$Organization |
+          -Dsonar.sources=. |
+          -Dsonar.python.coverage.reportPaths=coverage.xml
       - sleep 5
       - curl https://sonarcloud.io/api/qualitygates/project_status?projectKey=$Project > result.json
       - cat result.json
