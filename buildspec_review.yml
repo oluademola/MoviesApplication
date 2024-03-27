@@ -9,25 +9,27 @@ env:
 phases:
   install:
     runtime-versions:
-      python: 3.11  # Specify the exact Python version if needed
+      python: 3.8
 
   pre_build:
     commands:
       - apt-get update
       - apt-get install -y python3-pip jq
       - pip3 install --upgrade pip
-      - pip3 install sonar-scanner  # Use pip for Python-based SonarScanner
-      - export PATH=$PATH:/root/.local/bin/  # Add Python's bin directory to PATH
+      - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.6.2.2472-linux.zip
+      - unzip sonar-scanner-cli-4.6.2.2472-linux.zip
+      - export PATH=$PATH:/path/to/sonar-scanner-4.6.2.2472-linux/bin/
 
   build:
     commands:
-      - sonar-scanner |
-          -Dsonar.login=$LOGIN |
-          -Dsonar.host.url=$HOST |
-          -Dsonar.projectKey=$Project |
-          -Dsonar.organization=$Organization |
-          -Dsonar.sources=. |
-          -Dsonar.python.coverage.reportPaths=coverage.xml
+      # Run your Django tests here, replace with your actual test command
+      - python manage.py test
+      - sonar-scanner \
+          -Dsonar.login=$LOGIN \
+          -Dsonar.host.url=$HOST \
+          -Dsonar.projectKey=$Project \
+          -Dsonar.organization=$Organization \
+          -Dsonar.sources=.  # Specify source code path if not inferred correctly
       - sleep 5
       - curl https://sonarcloud.io/api/qualitygates/project_status?projectKey=$Project > result.json
       - cat result.json
