@@ -26,7 +26,6 @@ phases:
           -Dsonar.host.url=$HOST |
           -Dsonar.projectKey=$Project |
           -Dsonar.organization=$Organization |
-          -Dsonar.sources=. |
           -Dsonar.python.coverage.reportPaths=coverage.xml
       - sleep 5
       - curl https://sonarcloud.io/api/qualitygates/project_status?projectKey=$Project > result.json
