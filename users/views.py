@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from .forms import UserSignUpForm
+from django.views.decorators.http import require_POST
 
 # Create your views here.
+@require_POST
 def sign_up(request):
     if request.method == "POST":
         form = UserSignUpForm(request.POST)
