@@ -10,7 +10,7 @@ def index(request):
     context = {'newest_movies': newest_movies}
     return render(request, 'movies/index.html', context)
     
-require_GET    
+@require_GET    
 def show(request, movie_id):
     try:
         movie = Movie.objects.get(pk=movie_id)
