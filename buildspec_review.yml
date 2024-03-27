@@ -5,10 +5,12 @@ env:
     HOST: olumoviesapp/sonar:HOST
     Organization: olumoviesapp/sonar:Organization
     Project: olumoviesapp/sonar:Project
+
 phases:
   install:
     runtime-versions:
       python: 3.11  # Specify the exact Python version if needed
+
   pre_build:
     commands:
       - apt-get update
@@ -16,6 +18,7 @@ phases:
       - pip3 install --upgrade pip
       - pip3 install sonar-scanner  # Use pip for Python-based SonarScanner
       - export PATH=$PATH:/root/.local/bin/  # Add Python's bin directory to PATH
+
   build:
     commands:
       - sonar-scanner \
